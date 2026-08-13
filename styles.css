@@ -1,0 +1,150 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background-color: #F8FAFC;
+  color: #0A2E2B;
+  line-height: 1.6;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 5%;
+  background-color: #0A2E2B;
+  color: white;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #E2C044;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  margin-left: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.btn-primary {
+  background-color: #E2C044;
+  color: #0A2E2B !important;
+  padding: 0.7rem 1.4rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.btn-secondary {
+  border: 2px solid #E2C044;
+  color: #E2C044;
+  padding: 0.7rem 1.4rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 1rem;
+}
+
+.hero {
+  background-color: #0A2E2B;
+  color: white;
+  padding: 5rem 5%;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+  color: #E2C044;
+}
+
+.hero p {
+  max-width: 650px;
+  margin: 0 auto 2rem;
+  font-size: 1.15rem;
+  opacity: 0.9;
+}
+
+.hero-buttons {
+  margin-top: 1.5rem;
+}
+
+.problem, .how-it-works, .pathways, .features, .final-cta {
+  padding: 4rem 5%;
+  text-align: center;
+}
+
+.problem {
+  background-color: #F1F5F9;
+}
+
+.steps, .pathway-cards, .feature-grid {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+.steps {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.step, .card, .feature {
+  background: white;
+  padding: 1.8rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.pathway-cards {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.card h3 {
+  color: #0A2E2B;
+  margin-bottom: 0.5rem;
+}
+
+.feature-grid {
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+
+.feature {
+  font-weight: 600;
+  color: #0A2E2B;
+}
+
+.final-cta {
+  background-color: #0A2E2B;
+  color: white;
+}
+
+.final-cta h2 {
+  margin-bottom: 1.5rem;
+  color: #E2C044;
+}
+
+footer {
+  background-color: #06201E;
+  color: #ccc;
+  text-align: center;
+  padding: 2rem 5%;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.1rem;
+  }
+  .nav-links a {
+    margin-left: 0.8rem;
+    font-size: 0.85rem;
+  }
+  }
