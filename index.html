@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BloomTrack — Master Stacks with Confidence</title>
+<meta name="description" content="BloomTrack is a guided, gamified pathway for learning Bitcoin's Stacks layer — from wallets and sBTC to BNS and NFTs.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sea-900:#0A2E2B;
+    --sea-800:#123F3A;
+    --sea-700:#1B5049;
+    --gold-500:#D4AF37;
+    --gold-400:#E2C044;
+    --bg:#F8FAFC;
+    --bg-alt:#F1F5F9;
+    --paper:#FFFFFF;
+    --ink:#0A2E2B;
+    --ink-soft:#4B615E;
+    --line:#E3E9E7;
+    --radius-lg:16px;
+    --radius-md:12px;
+    --shadow-soft:0 4px 20px rgba(10,46,43,0.07);
+    --shadow-lift:0 12px 32px rgba(10,46,43,0.14);
+    --maxw:1180px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:"Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:"Plus Jakarta Sans", "Inter", sans-serif;
+    color:var(--sea-900);
+    margin:0;
+    line-height:1.15;
+    letter-spacing:-0.01em;
+  }
+  p{margin:0;}
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;max-width:100%;}
+  ul{margin:0;padding:0;list-style:none;}
+  button{font-family:inherit;}
+
+  .wrap{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 32px;
+  }
+  section{padding:96px 0;}
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--gold-500);
+    margin-bottom:16px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:18px;
+    height:2px;
+    background:var(--gold-500);
+    display:inline-block;
+  }
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:14px 28px;
+    border-radius:999px;
+    font-weight:600;
+    font-size:15px;
+    cursor:pointer;
+    border:1px solid transparent;
+    transition:transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    white-space:nowrap;
+  }
+  .btn:focus-visible{outline:2px solid var(--gold-500);outline-offset:3px;}
+  .btn-primary{
+    background:var(--gold-500);
+    color:var(--sea-900);
+  }
+  .btn-primary:hover{background:var(--gold-400);transform:translateY(-1px);box-shadow:var(--shadow-lift);}
+  .btn-ghost{
+    background:transparent;
+    color:var(--paper);
+    border-color:rgba(248,250,252,0.35);
+  }
+  .btn-ghost:hover{border-color:var(--gold-500);color:var(--gold-400);}
+  .btn-outline{
+    background:transparent;
+    color:var(--sea-900);
+    border-color:var(--sea-900);
+  }
+  .btn-outline:hover{background:var(--sea-900);color:var(--paper);}
+  .btn-small{padding:10px 18px;font-size:13.5px;}
+
+  /* ---------- Nav ---------- */
+  header.site{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:rgba(248,250,252,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:18px 32px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:"Plus Jakarta Sans", sans-serif;
+    font-weight:800;
+    font-size:19px;
+    color:var(--sea-900);
+  }
+  .logo-mark{
+    width:30px;height:30px;border-radius:9px;
+    background:linear-gradient(155deg, var(--sea-900), var(--sea-700));
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  .nav-links{
+    display:flex;
+    align-items:center;
+    gap:36px;
+  }
+  .nav-links a{
+    font-size:14.5px;
+    font-weight:500;
+    color:var(--ink-soft);
+    transition:color 0.15s ease;
+  }
+  .nav-links a:hover{color:var(--sea-900);}
+  .nav-cta{display:flex;align-items:center;gap:20px;}
+  .nav-toggle{
+    display:none;
+    background:none;border:none;cursor:pointer;
+    width:38px;height:38px;
+    border-radius:8px;
+    align-items:center;justify-content:center;
+  }
+  .nav-toggle span, .nav-toggle span::before, .nav-toggle span::after{
+    content:"";
+    display:block;
+    width:20px;height:2px;
+    background:var(--sea-900);
+    position:relative;
+    transition:0.2s ease;
+  }
+  .nav-toggle span::before{position:absolute;top:-6px;}
+  .nav-toggle span::after{position:absolute;top:6px;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:88px 0 64px;
+    overflow:hidden;
+  }
+  .hero .wrap{
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:56px;
+    align-items:center;
+  }
+  .hero h1{
+    font-size:clamp(34px, 4.4vw, 54px);
+    margin-bottom:22px;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--gold-500);
+    position:relative;
+  }
+  .hero p.lede{
+    font-size:17.5px;
+    color:var(--ink-soft);
+    max-width:480px;
+    margin-bottom:34px;
+  }
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:28px;}
+  .hero-trust{
+    display:flex;
+    gap:22px;
+    flex-wrap:wrap;
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+  .hero-trust span{display:flex;align-items:center;gap:7px;}
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--gold-500);}
+
+  /* Signature voyage visual */
+  .voyage-card{
+    background:linear-gradient(165deg, var(--sea-900), var(--sea-700));
+    border-radius:24px;
+    padding:38px 30px 30px;
+    color:var(--bg);
+    position:relative;
+    box-shadow:var(--shadow-lift);
+    overflow:hidden;
+  }
+  .voyage-card::after{
+    content:"";
+    position:absolute;
+    width:260px;height:260px;
+    background:radial-gradient(circle, rgba(212,175,55,0.18), transparent 70%);
+    top:-80px;right:-80px;
+  }
+  .voyage-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:26px;
+    position:relative;
+  }
+  .voyage-head p{font-size:12.5px;letter-spacing:0.06em;text-transform:uppercase;color:rgba(248,250,252,0.6);}
+  .voyage-head strong{font-family:"Plus Jakarta Sans";font-size:15px;color:var(--gold-400);}
+  .voyage-svg-wrap{position:relative;z-index:1;}
+  .voyage-labels{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    margin-top:14px;
+    gap:8px;
+  }
+  .voyage-labels div{font-size:12px;color:rgba(248,250,252,0.75);}
+  .voyage-labels strong{display:block;color:var(--bg);font-size:13.5px;font-weight:600;margin-bottom:2px;}
+  .voyage-foot{
+    margin-top:26px;
+    padding-top:20px;
+    border-top:1px solid rgba(248,250,252,0.14);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:12.5px;
+    color:rgba(248,250,252,0.65);
+  }
+  .voyage-foot strong{color:var(--gold-400);font-weight:600;}
+
+  /* ---------- Problem statement ---------- */
+  .problem{
+    background:var(--sea-900);
+    color:var(--bg);
+  }
+  .problem .wrap{
+    display:grid;
+    grid-template-columns:0.9fr 1.1fr;
+    gap:56px;
+    align-items:start;
+  }
+  .problem .eyebrow{color:var(--gold-400);}
+  .problem h2{color:var(--bg);font-size:clamp(26px,3vw,36px);max-width:420px;}
+  .problem-points{display:flex;flex-direction:column;gap:22px;}
+  .problem-point{
+    display:flex;
+    gap:16px;
+    padding-bottom:22px;
+    border-bottom:1px solid rgba(248,250,252,0.12);
+  }
+  .problem-point:last-child{border-bottom:none;padding-bottom:0;}
+  .problem-point .num{
+    font-family:"Plus Jakarta Sans";
+    font-weight:700;
+    color:var(--gold-400);
+    font-size:14px;
+    min-width:26px;
+  }
+  .problem-point h4{color:var(--bg);font-size:16px;margin-bottom:6px;}
+  .problem-point p{color:rgba(248,250,252,0.68);font-size:14.5px;}
+
+  /* ---------- How it works ---------- */
+  .how{position:relative;}
+  .how .head{max-width:560px;margin-bottom:56px;}
+  .how h2{font-size:clamp(26px,3vw,36px);margin-bottom:14px;}
+  .how .head p{color:var(--ink-soft);font-size:16px;}
+  .steps{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:28px;
+    position:relative;
+  }
+  .step-card{
+    background:var(--paper);
+    border-radius:var(--radius-lg);
+    padding:30px 26px;
+    box-shadow:var(--shadow-soft);
+    position:relative;
+    border:1px solid var(--line);
+  }
+  .step-index{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:38px;height:38px;
+    border-radius:10px;
+    background:var(--sea-900);
+    color:var(--gold-400);
+    font-family:"Plus Jakarta Sans";
+    font-weight:700;
+    font-size:14px;
+    margin-bottom:20px;
+  }
+  .step-card h3{font-size:18px;margin-bottom:10px;}
+  .step-card p{color:var(--ink-soft);font-size:14.5px;}
+
+  /* ---------- Pathways ---------- */
+  .pathways{background:var(--bg-alt);}
+  .pathways .head{max-width:560px;margin-bottom:48px;}
+  .pathways h2{font-size:clamp(26px,3vw,36px);margin-bottom:14px;}
+  .pathways .head p{color:var(--ink-soft);font-size:16px;}
+  .path-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:28px;
+  }
+  .path-card{
+    background:var(--paper);
+    border-radius:var(--radius-lg);
+    padding:34px 32px;
+    border:1px solid var(--line);
+    display:flex;
+    flex-direction:column;
+    transition:box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .path-card:hover{box-shadow:var(--shadow-lift);transform:translateY(-3px);}
+  .path-tag{
+    display:inline-block;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    color:var(--sea-700);
+    background:rgba(10,46,43,0.06);
+    padding:5px 12px;
+    border-radius:999px;
+    margin-bottom:18px;
+    width:fit-content;
+  }
+  .path-card h3{font-size:21px;margin-bottom:10px;}
+  .path-card > p{color:var(--ink-soft);font-size:14.5px;margin-bottom:22px;}
+  .path-weeks{display:flex;flex-direction:column;gap:12px;margin-bottom:26px;flex:1;}
+  .path-week{display:flex;gap:12px;font-size:13.8px;}
+  .path-week .wk{
+    font-family:"Plus Jakarta Sans";
+    font-weight:700;
+    color:var(--gold-500);
+    min-width:52px;
+  }
+  .path-week .desc{color:var(--ink-soft);}
+  .path-card-foot{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding-top:20px;
+    border-top:1px solid var(--line);
+  }
+  .path-link{
+    font-weight:600;
+    font-size:14px;
+    color:var(--sea-900);
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .path-link:hover{color:var(--gold-500);}
+
+  /* ---------- Features ---------- */
+  .features .head{max-width:560px;margin-bottom:48px;}
+  .features h2{font-size:clamp(26px,3vw,36px);margin-bottom:14px;}
+  .features .head p{color:var(--ink-soft);font-size:16px;}
+  .feature-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:24px;
+  }
+  .feature-card{
+    padding:28px 24px;
+    border-radius:var(--radius-md);
+    border:1px solid var(--line);
+    background:var(--paper);
+  }
+  .feature-icon{
+    width:42px;height:42px;
+    border-radius:10px;
+    background:var(--bg-alt);
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:18px;
+    color:var(--sea-900);
+  }
+  .feature-card h3{font-size:16.5px;margin-bottom:8px;}
+  .feature-card p{font-size:14px;color:var(--ink-soft);}
+
+  /* ---------- Final CTA ---------- */
+  .final-cta{
+    background:linear-gradient(155deg, var(--sea-900), var(--sea-700));
+    border-radius:28px;
+    margin:0 32px;
+    padding:72px 40px;
+    text-align:center;
+    max-width:calc(var(--maxw) - 64px);
+    margin-left:auto;
+    margin-right:auto;
+    position:relative;
+    overflow:hidden;
+  }
+  .final-cta::before{
+    content:"";
+    position:absolute;
+    width:340px;height:340px;
+    background:radial-gradient(circle, rgba(212,175,55,0.16), transparent 70%);
+    top:-120px;left:50%;
+    transform:translateX(-50%);
+  }
+  .final-cta h2{
+    color:var(--bg);
+    font-size:clamp(26px,3.6vw,38px);
+    max-width:520px;
+    margin:0 auto 16px;
+    position:relative;
+  }
+  .final-cta p{
+    color:rgba(248,250,252,0.72);
+    max-width:440px;
+    margin:0 auto 32px;
+    font-size:16px;
+    position:relative;
+  }
+  .final-cta .btn-primary{position:relative;}
+
+  /* ---------- Footer ---------- */
+  footer{
+    padding-top:80px;
+  }
+  .footer-top{
+    display:grid;
+    grid-template-columns:1.4fr repeat(3, 1fr);
+    gap:40px;
+    padding-bottom:56px;
+  }
+  .footer-brand p{
+    color:var(--ink-soft);
+    font-size:14px;
+    margin-top:14px;
+    max-width:280px;
+  }
+  .footer-col h4{
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--ink-soft);
+    margin-bottom:16px;
+    font-family:"Inter";
+    font-weight:600;
+  }
+  .footer-col ul{display:flex;flex-direction:column;gap:11px;}
+  .footer-col a{font-size:14.5px;color:var(--sea-900);}
+  .footer-col a:hover{color:var(--gold-500);}
+  .footer-bottom{
+    border-top:1px solid var(--line);
+    padding:26px 0 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:14px;
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+  .footer-bottom .disclaimer{max-width:560px;}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:900px){
+    .hero .wrap{grid-template-columns:1fr;}
+    .voyage-card{order:-1;}
+    .problem .wrap{grid-template-columns:1fr;gap:36px;}
+    .steps{grid-template-columns:1fr;}
+    .path-grid{grid-template-columns:1fr;}
+    .feature-grid{grid-template-columns:repeat(2, 1fr);}
+    .footer-top{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:760px){
+    .nav-links, .nav-cta .btn-outline{display:none;}
+    .nav-toggle{display:flex;}
+    nav{padding:16px 24px;}
+    .wrap{padding:0 22px;}
+    section{padding:64px 0;}
+    .final-cta{margin:0 22px;padding:52px 26px;}
+    .feature-grid{grid-template-columns:1fr;}
+    .footer-top{grid-template-columns:1fr;gap:32px;}
+    body.nav-open .mobile-menu{display:flex;}
+  }
+
+  .mobile-menu{
+    display:none;
+    flex-direction:column;
+    gap:2px;
+    padding:8px 22px 20px;
+    border-top:1px solid var(--line);
+  }
+  .mobile-menu a{
+    padding:13px 0;
+    font-size:15px;
+    font-weight:500;
+    color:var(--ink);
+    border-bottom:1px solid var(--line);
+  }
+  .mobile-menu .btn{margin-top:14px;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <nav>
+    <a href="#top" class="logo">
+      <span class="logo-mark" aria-hidden="true">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 3C12 3 6 9 6 14a6 6 0 0 0 12 0c0-5-6-11-6-11Z" stroke="#E2C044" stroke-width="1.8" stroke-linejoin="round"/></svg>
+      </span>
+      BloomTrack
+    </a>
+    <div class="nav-links">
+      <a href="#pathways">Pathways</a>
+      <a href="#how">How It Works</a>
+      <a href="#features">Features</a>
+      <a href="#pathways">Curriculum</a>
+    </div>
+    <div class="nav-cta">
+      <a href="#pathways" class="btn btn-outline btn-small">Start Learning</a>
+      <button class="nav-toggle" aria-label="Toggle menu" onclick="document.body.classList.toggle('nav-open')">
+        <span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="mobile-menu">
+    <a href="#pathways">Pathways</a>
+    <a href="#how">How It Works</a>
+    <a href="#features">Features</a>
+    <a href="#pathways">Curriculum</a>
+    <a href="#pathways" class="btn btn-primary btn-small">Start Learning</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">Bitcoin L2 · Stacks Ecosystem</div>
+        <h1>Master Stacks with <em>confidence</em></h1>
+        <p class="lede">A guided, day-by-day pathway through Bitcoin's Stacks layer — wallets, STX, sBTC, BNS, and NFTs — built for people who want to actually understand what they're using, not just click through it.</p>
+        <div class="hero-ctas">
+          <a href="#pathways" class="btn btn-primary">Start Learning</a>
+          <a href="#how" class="btn btn-outline">See How It Works</a>
+        </div>
+        <div class="hero-trust">
+          <span><span class="dot"></span>Self-paced, 4 weeks per pathway</span>
+          <span><span class="dot"></span>No prior crypto experience needed</span>
+        </div>
+      </div>
+
+      <div class="voyage-card" aria-hidden="true">
+        <div class="voyage-head">
+          <p>Your pathway</p>
+          <strong>Week 2 of 4</strong>
+        </div>
+        <div class="voyage-svg-wrap">
+          <svg viewBox="0 0 340 120" width="100%" height="auto">
+            <path d="M10 90 C 70 90, 70 30, 120 30 S 200 90, 250 90 S 300 40, 330 40" fill="none" stroke="rgba(226,192,68,0.35)" stroke-width="2" stroke-dasharray="1 8" stroke-linecap="round"/>
+            <path d="M10 90 C 70 90, 70 30, 120 30 S 200 90, 165 90" fill="none" stroke="#E2C044" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="10" cy="90" r="6" fill="#E2C044"/>
+            <circle cx="120" cy="30" r="6" fill="#E2C044"/>
+            <circle cx="250" cy="90" r="5" fill="rgba(226,192,68,0.4)"/>
+            <circle cx="250" cy="90" r="9" fill="none" stroke="rgba(226,192,68,0.4)" stroke-width="1.5"/>
+            <circle cx="330" cy="40" r="5" fill="rgba(248,250,252,0.3)"/>
+          </svg>
+        </div>
+        <div class="voyage-labels">
+          <div><strong>Wallets</strong>Set up &amp; secured</div>
+          <div><strong>sBTC</strong>In progress</div>
+          <div><strong>BNS</strong>Locked</div>
+        </div>
+        <div class="voyage-foot">
+          <span>Streak: <strong>6 days</strong></span>
+          <span>Next reward at <strong>day 7</strong></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM STATEMENT -->
+  <section class="problem">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">The problem</div>
+        <h2>Onboarding to Stacks shouldn't mean twelve browser tabs and a Discord full of jargon.</h2>
+      </div>
+      <div class="problem-points">
+        <div class="problem-point">
+          <span class="num">01</span>
+          <div>
+            <h4>Documentation is scattered</h4>
+            <p>Wallets, sBTC, BNS, and NFT standards each live in separate docs written for developers, not newcomers.</p>
+          </div>
+        </div>
+        <div class="problem-point">
+          <span class="num">02</span>
+          <div>
+            <h4>The technical entry bar is high</h4>
+            <p>Terms like "Stacking," "SIP-009," or "decentralized pegging" are thrown around with no on-ramp for the people who need them explained.</p>
+          </div>
+        </div>
+        <div class="problem-point">
+          <span class="num">03</span>
+          <div>
+            <h4>There's no way to track real progress</h4>
+            <p>Most tutorials end with a link, not a credential — so learners can't prove, even to themselves, what they've actually learned.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how" id="how">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow">How it works</div>
+        <h2>Three steps from curious to certified</h2>
+        <p>Every pathway follows the same rhythm, so you always know what's next.</p>
+      </div>
+      <div class="steps">
+        <div class="step-card">
+          <div class="step-index">01</div>
+          <h3>Choose your pathway</h3>
+          <p>Start with Stacks Foundations to learn the base layer, or jump into Stacks NFTs &amp; BNS if you already hold STX.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-index">02</div>
+          <h3>Daily lessons &amp; assessments</h3>
+          <p>Short, focused lessons each day with hands-on exercises and a weekly assessment to check what's actually sticking.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-index">03</div>
+          <h3>Track progress &amp; get certified</h3>
+          <p>Watch your streak and progress bar fill in, then walk away with a shareable proof-of-completion credential.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PATHWAYS -->
+  <section class="pathways" id="pathways">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow">Pathways</div>
+        <h2>Pick the pathway that matches where you're headed</h2>
+        <p>Each pathway runs four weeks, with daily lessons and a weekly assessment.</p>
+      </div>
+      <div class="path-grid">
+
+        <div class="path-card">
+          <span class="path-tag">Beginner-friendly</span>
+          <h3>Stacks Foundations</h3>
+          <p>The base layer: how Stacks works as a Bitcoin L2, how to hold and move STX, and how sBTC and BNS fit together.</p>
+          <div class="path-weeks">
+            <div class="path-week"><span class="wk">WK 1</span><span class="desc">Bitcoin L2 context &amp; wallet setup (Hiro / Xverse)</span></div>
+            <div class="path-week"><span class="wk">WK 2</span><span class="desc">STX tokens, transaction lifecycle &amp; gas</span></div>
+            <div class="path-week"><span class="wk">WK 3</span><span class="desc">sBTC &amp; the Bitcoin security model</span></div>
+            <div class="path-week"><span class="wk">WK 4</span><span class="desc">BNS registration &amp; Stacking for yield</span></div>
+          </div>
+          <div class="path-card-foot">
+            <span style="font-size:13px;color:var(--ink-soft);">4 weeks · Certificate included</span>
+            <a href="#" class="path-link">View curriculum →</a>
+          </div>
+        </div>
+
+        <div class="path-card">
+          <span class="path-tag">Builder track</span>
+          <h3>Stacks NFTs &amp; BNS</h3>
+          <p>Go deeper into digital ownership on Stacks — from the SIP-009 standard to minting, utility, and on-chain identity.</p>
+          <div class="path-weeks">
+            <div class="path-week"><span class="wk">WK 1</span><span class="desc">SIP-009 standard vs. ERC-721</span></div>
+            <div class="path-week"><span class="wk">WK 2</span><span class="desc">Minting mechanics, marketplaces &amp; signing</span></div>
+            <div class="path-week"><span class="wk">WK 3</span><span class="desc">NFT utility, access control &amp; integrations</span></div>
+            <div class="path-week"><span class="wk">WK 4</span><span class="desc">Digital identity mapping via BNS</span></div>
+          </div>
+          <div class="path-card-foot">
+            <span style="font-size:13px;color:var(--ink-soft);">4 weeks · Certificate included</span>
+            <a href="#" class="path-link">View curriculum →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow">Features</div>
+        <h2>Built to keep you moving, not just reading</h2>
+        <p>The tools that turn a static tutorial into a habit you actually keep.</p>
+      </div>
+      <div class="feature-grid">
+
+        <div class="feature-card">
+          <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 19V5M11 19V9M18 19v-6" stroke="#0A2E2B" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <h3>Progress tracking</h3>
+          <p>A visual streak and progress bar that shows exactly where you are in the pathway.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4M21 12v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h11" stroke="#0A2E2B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Weekly assessments</h3>
+          <p>Short checks at the end of each week confirm the concepts are actually sticking.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="8" width="18" height="13" rx="2" stroke="#0A2E2B" stroke-width="2"/><path d="M12 8V21M3 12h18M12 8c-1.5-4-6-4-6 0s4.5 4 6 0Zm0 0c1.5-4 6-4 6 0s-4.5 4-6 0Z" stroke="#0A2E2B" stroke-width="2" stroke-linejoin="round"/></svg></div>
+          <h3>Gamified rewards</h3>
+          <p>Hit a 7-day streak or ace a weekly quiz to unlock the Treasure Box or a Spin-to-Win moment.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2 3 7l9 5 9-5-9-5Z M3 12l9 5 9-5 M3 17l9 5 9-5" stroke="#0A2E2B" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
+          <h3>Stacks-native curriculum</h3>
+          <p>Every lesson is written specifically for Stacks — not adapted from generic blockchain material.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#0A2E2B" stroke-width="2"/><path d="M12 3c2.5 2.7 4 6 4 9s-1.5 6.3-4 9c-2.5-2.7-4-6-4-9s1.5-6.3 4-9Z" stroke="#0A2E2B" stroke-width="1.6"/></svg></div>
+          <h3>Ecosystem pathing</h3>
+          <p>Finish a pathway and get pointed toward the dApps, DAOs, and bootcamps that fit where you landed.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 15a4 4 0 0 0 4-4V6a4 4 0 1 0-8 0v5a4 4 0 0 0 4 4Z M19 11a7 7 0 0 1-14 0 M12 19v3" stroke="#0A2E2B" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <h3>Wallet-verified certificates</h3>
+          <p>Completion credentials that can be tied to your Stacks address or BNS name.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section>
+    <div class="final-cta">
+      <h2>Your Stacks pathway starts with day one, not chapter one.</h2>
+      <p>Join BloomTrack and turn scattered documentation into a credential you can actually show for it.</p>
+      <a href="#pathways" class="btn btn-primary">Join BloomTrack</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#top" class="logo">
+          <span class="logo-mark" aria-hidden="true">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 3C12 3 6 9 6 14a6 6 0 0 0 12 0c0-5-6-11-6-11Z" stroke="#E2C044" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          </span>
+          BloomTrack
+        </a>
+        <p>A guided learning pathway for the Stacks ecosystem — built to help Bitcoin L2 newcomers become confident, credentialed users.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Pathways</h4>
+        <ul>
+          <li><a href="#pathways">Stacks Foundations</a></li>
+          <li><a href="#pathways">Stacks NFTs &amp; BNS</a></li>
+          <li><a href="#how">How It Works</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Ecosystem</h4>
+        <ul>
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">Zero Authority DAO</a></li>
+          <li><a href="#">Stacks Community</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 BloomTrack. Built on Stacks.</p>
+      <p class="disclaimer">Educational content only — not financial advice. Always verify wallet and transaction details independently.</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
